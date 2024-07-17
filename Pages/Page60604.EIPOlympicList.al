@@ -88,6 +88,7 @@ page 60604 "Olympic List"
                             Rec."No." := SummerOlympic."No.";
                             if Rec.Insert() then;
                             Rec.City := CopyStr(SummerOlympic.Description, 1, StrPos(SummerOlympic.Description, ' '));
+                            Rec.Name := 'Summer Olympics in ' + Rec.City;
                             Rec.Year := SummerOlympic.Year;
                             Rec.Type := Rec.Type::Letnia;
                             Rec.Modify();
