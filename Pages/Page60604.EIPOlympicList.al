@@ -77,7 +77,7 @@ page 60604 "Olympic List"
                         repeat
                             Rec.Init();
                             Rec."No." := WinterOlympic."No.";
-                            Rec.Insert();
+                            if Rec.Insert() then;
                             Rec.Year := WinterOlympic.Year;
                             Rec.Type := Rec.Type::Zimowa;
                             Rec.Modify();
@@ -86,12 +86,26 @@ page 60604 "Olympic List"
                         repeat
                             Rec.Init();
                             Rec."No." := SummerOlympic."No.";
-                            Rec.Insert();
+                            if Rec.Insert() then;
+                            Rec.City := CopyStr(SummerOlympic.Description, 1, StrPos(SummerOlympic.Description, ' '));
                             Rec.Year := SummerOlympic.Year;
-                            //CurrPage.SetSelectionFilter();
                             Rec.Type := Rec.Type::Letnia;
                             Rec.Modify();
                         until SummerOlympic.Next() = 0;
+                end;
+            }
+            action("Delete All Olympics")
+            {
+                ApplicationArea = All;
+                trigger OnAction()
+                var
+                    OlympicRec: Record "Olympic";
+                begin
+                    if OlympicRec.FindSet() then
+                        repeat
+                            OlympicRec.Delete();
+                        until OlympicRec.Next() = 0;
+                    Message('All Olympic records have been deleted.');
                 end;
             }
         }

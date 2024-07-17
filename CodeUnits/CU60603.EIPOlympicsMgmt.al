@@ -26,8 +26,8 @@ codeunit 60600 "Olympics Mgmt."
             until SummerOlympicsRec.Next() = 0;
         end;
 
-        LocationFilter := 'NIEBIESKI';
-        ItemRec.SetRange("Location Filter", LocationFilter);
+        //LocationFilter := 'NIEBIESKI';
+        //ItemRec.SetRange("Location Filter", LocationFilter);
 
         if ItemRec.FindSet() then
             repeat

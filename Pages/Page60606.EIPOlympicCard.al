@@ -9,7 +9,7 @@ page 60606 "Olympic Card"
     {
         area(content)
         {
-            repeater(Group)
+            group(Info)
             {
                 field("No."; Rec."No.")
                 {
@@ -40,7 +40,7 @@ page 60606 "Olympic Card"
                     ApplicationArea = All;
                 }
             }
-            repeater(Information)
+            group(Information)
             {
                 field("Fun Fact"; Rec."Fun Fact")
                 {
@@ -48,7 +48,13 @@ page 60606 "Olympic Card"
                 }
             }
         }
-
+        //area(factboxes)
+        //{
+        //part(OlympicPicture; "Olympic Picture")
+        //{
+        //ApplicationArea = All;
+        //}
+        // }
     }
 
     actions
@@ -88,16 +94,11 @@ page 60606 "Olympic Card"
                     OutStr: OutStream;
                     TempBlob: Codeunit "Temp Blob";
                     FileName: Text;
-                    Content_M: Text;
                 begin
                     FileName := 'FunFact.txt';
                     TempBlob.CreateOutStream(OutStr, TextEncoding::Windows);
 
                     OutStr.WriteText(Rec."Fun Fact");
-
-                    //Optional: Write additional text
-                    //Content_M := 'Additional content if needed.';
-                    //OutStr.WriteText(Content_M);
 
                     TempBlob.CreateInStream(InStr, TextEncoding::Windows);
                     DownloadFromStream(InStr, 'Export Fun Fact', '', '', FileName);
@@ -119,5 +120,3 @@ page 60606 "Olympic Card"
         }
     }
 }
-
-

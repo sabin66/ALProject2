@@ -2,7 +2,7 @@ page 60601 "Winter Olympics Page"
 {
     PageType = List;
     ApplicationArea = All;
-    UsageCategory = Administration;
+    UsageCategory = Lists;
     SourceTable = "Winter Olympics";
 
     layout

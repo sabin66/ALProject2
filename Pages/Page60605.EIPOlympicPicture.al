@@ -3,17 +3,15 @@ page 60605 "Olympic Picture"
     ApplicationArea = All;
     SourceTable = "Olympic";
     UsageCategory = Documents;
+    PageType = Card;
 
     layout
     {
-        area(content)
+        area(Content)
         {
-            repeater(Group)
+            field(Image; Rec.Image)
             {
-                field(Image; Rec.Image)
-                {
-                    ApplicationArea = All;
-                }
+                ApplicationArea = All;
             }
         }
     }
@@ -52,9 +50,11 @@ page 60605 "Olympic Picture"
                     tmpinstream: InStream;
                     tmpfile: Text;
                 begin
-                    DownloadFromStream(tmpinstream, 'Export picture', '', 'All Files (*.*)|*.*', tmpfile);
-                    Rec.Image.ExportStream(tmpoutstream);
-                    Rec.Modify();
+                    if DownloadFromStream(tmpinstream, 'Export picture', '', 'All Files (*.*)|*.*', tmpfile) then begin
+                        Rec.Image.ExportStream(tmpoutstream);
+                        Rec.Modify();
+                    end else
+                        exit;
                 end;
             }
         }
