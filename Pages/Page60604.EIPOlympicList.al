@@ -52,8 +52,11 @@ page 60604 "Olympic List"
             {
                 ApplicationArea = All;
                 trigger OnAction()
+                var
+                    CityToOpen: Text;
                 begin
-
+                    CityToOpen := Rec.City;
+                    Hyperlink('https://maps.google.com/?q=' + CityToOpen);
                 end;
 
             }
@@ -61,8 +64,11 @@ page 60604 "Olympic List"
             {
                 ApplicationArea = All;
                 trigger OnAction()
+                var
+                    CityToOpen: Text;
                 begin
-
+                    CityToOpen := Rec.City;
+                    Hyperlink('https://www.google.com/search?q=' + CityToOpen);
                 end;
 
             }
@@ -72,27 +78,29 @@ page 60604 "Olympic List"
                 var
                     WinterOlympic: Record "Winter Olympics";
                     SummerOlympic: Record "Summer Olympics";
+                    Olympic: Record "Olympic";
                 begin
                     if WinterOlympic.FindSet() then
                         repeat
-                            Rec.Init();
-                            Rec."No." := WinterOlympic."No.";
-                            if Rec.Insert() then;
-                            Rec.Year := WinterOlympic.Year;
-                            Rec.Type := Rec.Type::Zimowa;
-                            Rec.Modify();
+                            Olympic.Init();
+                            Olympic."No." := WinterOlympic."No.";
+                            if Olympic.Insert() then;
+                            Olympic.Year := WinterOlympic.Year;
+                            Olympic.Type := Olympic.Type::Zimowa;
+                            Olympic.Modify();
                         until WinterOlympic.Next() = 0;
                     if SummerOlympic.FindSet() then
                         repeat
-                            Rec.Init();
-                            Rec."No." := SummerOlympic."No.";
-                            if Rec.Insert() then;
-                            Rec.City := CopyStr(SummerOlympic.Description, 1, StrPos(SummerOlympic.Description, ' '));
-                            Rec.Name := 'Summer Olympics in ' + Rec.City;
-                            Rec.Year := SummerOlympic.Year;
-                            Rec.Type := Rec.Type::Letnia;
-                            Rec.Modify();
+                            Olympic.Init();
+                            Olympic."No." := SummerOlympic."No.";
+                            if Olympic.Insert() then;
+                            Olympic.City := CopyStr(SummerOlympic.Description, 1, StrPos(SummerOlympic.Description, ' '));
+                            Olympic.Name := 'Summer Olympics in ' + Olympic.City;
+                            Olympic.Year := SummerOlympic.Year;
+                            Olympic.Type := Olympic.Type::Letnia;
+                            Olympic.Modify();
                         until SummerOlympic.Next() = 0;
+                    CurrPage.Update();
                 end;
             }
             action("Delete All Olympics")

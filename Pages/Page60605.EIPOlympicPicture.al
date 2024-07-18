@@ -2,8 +2,7 @@ page 60605 "Olympic Picture"
 {
     ApplicationArea = All;
     SourceTable = "Olympic";
-    UsageCategory = Documents;
-    PageType = Card;
+    PageType = CardPart;
 
     layout
     {
@@ -46,15 +45,26 @@ page 60605 "Olympic Picture"
 
                 trigger OnAction()
                 var
-                    tmpoutstream: OutStream;
-                    tmpinstream: InStream;
-                    tmpfile: Text;
+                    InStr: InStream;
+                    OutStr: OutStream;
+                    TempBlob: Codeunit "Temp Blob";
+                    FileName: Text;
                 begin
-                    if DownloadFromStream(tmpinstream, 'Export picture', '', 'All Files (*.*)|*.*', tmpfile) then begin
-                        Rec.Image.ExportStream(tmpoutstream);
-                        Rec.Modify();
-                    end else
-                        exit;
+                    FileName := 'ExportedPicture.png';
+
+                    // Create an OutStream for the Temp Blob
+                    TempBlob.CreateOutStream(OutStr, TextEncoding::Windows);
+
+                    // Export the image to the OutStream
+                    Rec.Image.ExportStream(OutStr);
+
+                    // Create an InStream from the Temp Blob
+                    TempBlob.CreateInStream(InStr, TextEncoding::Windows);
+
+                    // Download the file to the client
+                    DownloadFromStream(InStr, 'Export picture', '', 'PNG Files (*.png)|*.png', FileName);
+
+                    Message('Picture exported successfully.');
                 end;
             }
         }

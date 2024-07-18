@@ -48,13 +48,15 @@ page 60606 "Olympic Card"
                 }
             }
         }
-        //area(factboxes)
-        //{
-        //part(OlympicPicture; "Olympic Picture")
-        //{
-        //ApplicationArea = All;
-        //}
-        // }
+        area(factboxes)
+        {
+            part("Olympic Picture"; "Olympic Picture")
+            {
+                ApplicationArea = All;
+                SubPageLink = "No." = field("No.");
+                Visible = true;
+            }
+        }
     }
 
     actions
